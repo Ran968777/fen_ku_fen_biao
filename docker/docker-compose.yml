@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql-db0:
+    image: mysql:8.0.32
+    container_name: mysql-db0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: order_db_0
+    ports:
+      - "23306:3306"
+    volumes:
+      - ./db0/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db0-data:/var/lib/mysql
+
+  mysql-db1:
+    image: mysql:8.0.32
+    container_name: mysql-db1
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: order_db_1
+    ports:
+      - "23307:3306"
+    volumes:
+      - ./db1/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db1-data:/var/lib/mysql
+
+volumes:
+  db0-data:
+  db1-data:

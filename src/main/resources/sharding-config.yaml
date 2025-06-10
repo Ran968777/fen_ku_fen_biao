@@ -1,0 +1,49 @@
+dataSources:
+  ds_0:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    jdbcUrl: jdbc:mysql://localhost:23306/order_db_0?allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+  ds_1:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    jdbcUrl: jdbc:mysql://localhost:23307/order_db_1?allowPublicKeyRetrieval=true&serverTimezone=UTC&useSSL=false
+    username: root
+    password: root
+
+rules:
+  - !SHARDING
+    tables:
+      t_order:
+        actualDataNodes: ds_${0..1}.t_order_${0..1}
+        databaseStrategy:
+          standard:
+            shardingColumn: user_id
+            shardingAlgorithmName: t_user_inline
+        tableStrategy:
+          standard:
+            shardingColumn: order_id
+            shardingAlgorithmName: t_order_inline
+
+#    defaultDatabaseStrategy:
+#      standard:
+#        shardingColumn: user_id
+#        shardingAlgorithmName: t_user_inline
+
+    shardingAlgorithms:
+      t_user_inline:
+        type:  INLINE
+        props:
+          algorithm-expression: ds_${user_id % 2}
+      t_order_inline:
+        type:  INLINE
+        props:
+          algorithm-expression: t_order_${order_id % 2}
+
+props:
+  sql-show: true
+
+
+
+
