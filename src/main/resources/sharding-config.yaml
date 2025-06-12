@@ -26,12 +26,16 @@ rules:
             shardingColumn: order_id
             shardingAlgorithmName: t_order_inline
 
-#    defaultDatabaseStrategy:
-#      standard:
-#        shardingColumn: user_id
-#        shardingAlgorithmName: t_user_inline
+    defaultDatabaseStrategy:
+      standard:
+        shardingColumn: user_id
+        shardingAlgorithmName: default_database_inline
 
     shardingAlgorithms:
+      default_database_inline:
+        type: INLINE
+        props:
+          algorithm-expression: ds_1
       t_user_inline:
         type:  INLINE
         props:

@@ -1,5 +1,7 @@
 package org.example.ran;
 
+import org.example.ran.dao.AaMapper;
+import org.example.ran.service.AaService;
 import org.example.ran.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
@@ -22,5 +24,13 @@ class FenKuFenBiaoApplicationTests {
     @Test
     void query_test() {
         System.out.println(orderService.list());
+    }
+
+
+    @Autowired
+    AaService aaService;
+    @Test
+    void aa_test(){
+        System.out.println(aaService.list());
     }
 }
